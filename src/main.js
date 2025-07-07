@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   /* === Sample IAST surfaces that trigger all rule families === */
   const samples = [
-    'ceti',        // a + i  → e
+    'athaitad',        // a + i  → e
     'soktam',      // a + u  → o  (so + uktam)
     'parṣi',       // a + ṛ  → ar
     'kalabdha',    // a + ḷ  → al
