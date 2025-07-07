@@ -23,68 +23,82 @@ export class SandhiSplitter {
       : [...s];
   }
 
-  /* ------------------------------------------------------------------
- *  Minimal, flat rule list (IAST) – covers:
- *  • avagraha cases (e’, o’, …)
- *  • a/ā-sandhi, ik-sandhi, ec-sandhi
- *  • visarga families (as / ās)
- *  • initial t, n, m consonant sandhis
+/* ------------------------------------------------------------------
+ *  Exhaustive IAST rule table (avagraha, vowel sandhi, visarga,
+ *  initial t / n / m assimilations)
  * ------------------------------------------------------------------ */
-  static get RULES () {
+  static get RULES() {
     return [
-      /* ---------- avagraha (’ = euphonic a-elision) ---------- */
-      { c:"e’",  l:"e",  r:"a" },
-      { c:"o’",  l:"o",  r:"a" },
-      { c:"ai’", l:"ai", r:"a" },
-      { c:"au’", l:"au", r:"a" },
-      { c:"ā’",  l:"ā",  r:"a" },
+      /* ---------- avagraha cases ---------- */
+      { c:"e’",  l:"e",   r:"a" },
+      { c:"o’",  l:"o",   r:"a" },
+      { c:"ai’", l:"ai",  r:"a" },
+      { c:"au’", l:"au",  r:"a" },
+      { c:"ā’",  l:"ā",   r:"a" },
 
-      /* ---------- a / ā + vowels ------------------------------ */
-      { c:"ā",  l:"a",  r:"a" }, { c:"ā",  l:"ā", r:"a" },
-      { c:"e",  l:"a",  r:"i" }, { c:"e",  l:"ā", r:"i" },
-      { c:"e",  l:"a",  r:"ī" }, { c:"e",  l:"ā", r:"ī" },
-      { c:"o",  l:"a",  r:"u" }, { c:"o",  l:"ā", r:"u" },
-      { c:"o",  l:"a",  r:"ū" }, { c:"o",  l:"ā", r:"ū" },
-      { c:"ar", l:"a",  r:"ṛ" }, { c:"ar", l:"ā", r:"ṛ" },
-      { c:"al", l:"a",  r:"ḷ" }, { c:"al", l:"ā", r:"ḷ" },
-      { c:"ai", l:"a",  r:"i" }, { c:"ai", l:"ā", r:"i" },
-      { c:"ai", l:"ā",  r:"ī" }, { c:"ai", l:"a", r:"e" },
-      { c:"ai", l:"ā",  r:"e" },
-      { c:"au", l:"a",  r:"u" }, { c:"au", l:"ā", r:"u" },
-      { c:"au", l:"ā",  r:"ū" }, { c:"au", l:"a", r:"o" },
-      { c:"au", l:"ā",  r:"o" },
+      /* ---------- a / ā + vowels ---------- */
+      { c:"ā",   l:"a",  r:"a" }, { c:"ā",  l:"ā", r:"a" },
+      { c:"e",   l:"a",  r:"i" }, { c:"e",  l:"ā", r:"i" },
+      { c:"e",   l:"a",  r:"ī" }, { c:"e",  l:"ā", r:"ī" },
+      { c:"o",   l:"a",  r:"u" }, { c:"o",  l:"ā", r:"u" },
+      { c:"o",   l:"a",  r:"ū" }, { c:"o",  l:"ā", r:"ū" },
+      { c:"ar",  l:"a",  r:"ṛ" }, { c:"ar", l:"ā", r:"ṛ" },
+      { c:"al",  l:"a",  r:"ḷ" }, { c:"al", l:"ā", r:"ḷ" },
+      { c:"ai",  l:"a",  r:"i" }, { c:"ai", l:"ā", r:"i" },
+      { c:"ai",  l:"ā",  r:"ī" }, { c:"ai", l:"a", r:"e" },
+      { c:"ai",  l:"ā",  r:"e" },
+      { c:"au",  l:"a",  r:"u" }, { c:"au", l:"ā", r:"u" },
+      { c:"au",  l:"ā",  r:"ū" }, { c:"au", l:"a", r:"o" },
+      { c:"au",  l:"ā",  r:"o" },
 
-      /* ---------- ik-sandhi (i / ī / u / ū / ṛ / ṝ) ----------- */
-      { c:"ī",  l:"i",  r:"i" },
-      { c:"ya", l:"i",  r:"a" }, { c:"yi", l:"i",  r:"i" },
-      { c:"yu", l:"i",  r:"u" }, { c:"ye", l:"i",  r:"e" },
-      { c:"ū",  l:"u",  r:"u" },
-      { c:"va", l:"u",  r:"a" }, { c:"vṛ", l:"u", r:"ṛ" },
-      { c:"ṝ",  l:"ṛ",  r:"ṛ" },
-      { c:"ra", l:"ṛ",  r:"a" },
+      /* ---------- ik-sandhi (complete) ---------- */
+      { c:"ī",   l:"i",   r:"i" },
+      { c:"ya",  l:"i",   r:"a" }, { c:"yi", l:"i", r:"i" },
+      { c:"yī",  l:"i",   r:"ī" },
+      { c:"yu",  l:"i",   r:"u" }, { c:"yū", l:"i", r:"ū" },
+      { c:"yṛ",  l:"i",   r:"ṛ" }, { c:"yṝ", l:"i", r:"ṝ" },
+      { c:"yḷ",  l:"i",   r:"ḷ" }, { c:"yḹ", l:"i", r:"ḹ" },
+      { c:"ye",  l:"i",   r:"e" }, { c:"yai",l:"i", r:"ai" },
+      { c:"yo",  l:"i",   r:"o" }, { c:"yau",l:"i", r:"au" },
 
-      /* ---------- ec-sandhi (e / ai / au initials) ------------ */
-      { c:"e’",  l:"e",  r:"a" },        // already listed
-      { c:"ai",  l:"e",  r:"i" },
-      { c:"ā a", l:"ai", r:"a" },
-      { c:"āv a",l:"au", r:"a" },
+      { c:"ū",   l:"u",   r:"u" },
+      { c:"va",  l:"u",   r:"a" }, { c:"vi", l:"u", r:"i" },
+      { c:"vī",  l:"u",   r:"ī" },
+      { c:"vu",  l:"u",   r:"u" }, { c:"vū", l:"u", r:"ū" },
+      { c:"vṛ",  l:"u",   r:"ṛ" }, { c:"vṝ", l:"u", r:"ṝ" },
+      { c:"vḷ",  l:"u",   r:"ḷ" }, { c:"vḹ", l:"u", r:"ḹ" },
+      { c:"ve",  l:"u",   r:"e" },
+      { c:"vai", l:"u",   r:"ai" },
+      { c:"vo",  l:"u",   r:"o" },
+      { c:"vau", l:"u",   r:"au" },
 
-      /* ---------- visarga families ---------------------------- */
-      { c:"o’",  l:"as", r:"a" },        // already listed
+      { c:"ṝ",   l:"ṛ",   r:"ṛ" },
+      { c:"ra",  l:"ṛ",   r:"a" }, { c:"ri", l:"ṛ", r:"i" },
+      { c:"rī",  l:"ṛ",   r:"ī" },
+      { c:"ru",  l:"ṛ",   r:"u" }, { c:"rū", l:"ṛ", r:"ū" },
+      { c:"rḷ",  l:"ṛ",   r:"ḷ" }, { c:"rḹ", l:"ṛ", r:"ḹ" },
+      { c:"re",  l:"ṛ",   r:"e" }, { c:"rai",l:"ṛ", r:"ai" },
+      { c:"ro",  l:"ṛ",   r:"o" }, { c:"rau",l:"ṛ", r:"au" },
+
+      { c:"ḹ",   l:"ḷ",   r:"ḷ" }, /* NEW – savarṇa lengthening */
+
+      /* ---------- ec-sandhi (initial e / ai / au) ---------- */
+      { c:"ai",  l:"e",   r:"i" },
+      { c:"āa", l:"ai",  r:"a" },
+      { c:"āva",l:"au",  r:"a" },
+
+      /* ---------- visarga families ---------- */
+      { c:"o’",  l:"as", r:"a" },
       { c:"ak", l:"as", r:"k" },
       { c:"āa", l:"ās", r:"a" },
 
-      /* ---------- initial “t” --------------------------------- */
+      /* ---------- initial “t”, “n”, “m” ---------- */
       { c:"da", l:"t",  r:"a" },
       { c:"cch",l:"t",  r:"ś" },
       { c:"nm", l:"t",  r:"m" },
-
-      /* ---------- initial “n” --------------------------------- */
       { c:"anna", l:"an", r:"a" },
       { c:"ñj",   l:"n",  r:"j" },
-
-      /* ---------- initial “m” --------------------------------- */
-      { c:"ṃk", l:"m", r:"k" }
+      { c:"ṃk",   l:"m",  r:"k" }
     ];
   }
 
