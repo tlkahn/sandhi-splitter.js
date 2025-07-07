@@ -1,0 +1,19 @@
+{
+  "name": "sandhi-splitter",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "Ei Kuro",
+  "license": "MIT",
+  "description": "",
+  "devDependencies": {
+    "vite": "^7.0.2"
+  }
+}
+
+
