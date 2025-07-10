@@ -7,13 +7,13 @@
     "build": "vite build",
     "preview": "vite preview"
   },
+  "main": "dist/sandhi-splitter.js",
+  "module": "dist/sandhi-splitter.esm.js",
   "keywords": [],
   "author": "Ei Kuro",
   "license": "MIT",
   "description": "",
   "devDependencies": {
-    "vite": "^7.0.2"
+    "vite": "^7.0.4"
   }
 }
-
-
